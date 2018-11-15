@@ -27,7 +27,8 @@ export class AppNav extends React.Component {
               <div className="nav-link nav-item dropdown-toggle pointer" id="reimbs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reimbursement Requests</div>
               <div className="dropdown-menu" aria-labelledby="reimbs-dropdown">
                 <div className="dropdown-item"><Link to="/viewReimb" className="unset-anchor nav-link">View Reimbursement Requests</Link></div>
-                <div className="dropdown-item"><Link to="/newReimb" className="unset-anchor nav-link">Create a New Reimbursement Request</Link></div>
+                <div className="dropdown-item"><Link to="/newReimb" className="unset-anchor nav-link">Create a New Request</Link></div>
+                <div className="dropdown-item"><Link to="/resolveReimb" className="Unset-anchor nav-link">Approve/Deny a Request</Link></div>
               </div>
               </li>
               {/* <li className="nav-item active dropdown">

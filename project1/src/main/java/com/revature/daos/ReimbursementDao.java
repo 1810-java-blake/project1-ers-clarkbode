@@ -13,6 +13,8 @@ public interface ReimbursementDao {
 	void resolveReimbursement(int reimbId, int userId, int newStatusId);
 	
 	List<Reimbursement> findAll();
-	List<Reimbursement> findAllByStatus(int status);  
+	List<Reimbursement> findAllByStatus(int status);
+
+	Reimbursement findById(int id);  
 
 }

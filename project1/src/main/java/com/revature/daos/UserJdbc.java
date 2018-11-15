@@ -28,8 +28,8 @@ public class UserJdbc implements UserDao {
 	public User findById(int id) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			log.debug("finding user with the id " + id);
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_users\r\n" + "WHERE ers_users_id = " + id); // SQL
-
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_users\r\n" + "WHERE ers_users_id = " + id); 
+			
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {

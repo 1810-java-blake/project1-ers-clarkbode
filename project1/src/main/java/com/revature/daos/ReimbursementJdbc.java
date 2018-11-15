@@ -106,6 +106,34 @@ public class ReimbursementJdbc implements ReimbursementDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public Reimbursement findById(int id) {
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			log.debug("finding reimbursement with the id " + id);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement\r\n" + 
+					"WHERE reimb_id = " + id); // SQL
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				log.trace("reimb found with id " + id + " attempting to extract result set");
+				Reimbursement foundReimb = new Reimbursement(rs.getInt("reimb_id"), rs.getDouble("reimb_amount"), 
+						rs.getTimestamp("reimb_submitted"), rs.getTimestamp("reimb_resolved"), rs.getString("reimb_description"), 
+						rs.getString("reimb_receipt"), rs.getInt("reimb_author"), rs.getInt("reimb_resolver"), 
+						rs.getInt("reimb_status_id"), rs.getInt("reimb_type_id"));
+				
+				//System.out.println("I AM RETURNING: " + foundReimb);
+				return foundReimb;
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Derp reimbursement findbyID");
+		}
+		return null;
+	}
 
 	@Override
 	public void resolveReimbursement(int reimbId, int userId, int newStatusId) {

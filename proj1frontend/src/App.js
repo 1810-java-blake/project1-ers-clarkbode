@@ -14,6 +14,7 @@ import { viewReimbursementByIdComponent } from './Components/viewReimbursementBy
 import { viewReimbursementByStatusComponent } from './Components/viewReimbursementByStatusComponent';
 import { viewReimbursementByAuthorComponent } from './Components/viewReimbursementByAuthorComponent';
 import { ReimbursementTableComponent } from './Components/ReimbursementTableComponent';
+import { resolveReimbursementComponent } from './Components/ResolveReimbursementComponent';
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/idReimb" component={viewReimbursementByIdComponent} />
             <Route path="/statusReimb" component={viewReimbursementByStatusComponent} />
             <Route path="/authorReimb" component={viewMyReimbursementComponent} />
+            <Route path="/resolveReimb" component={resolveReimbursementComponent} />
             {/* /myReimb, /idReimb, /statusReimb, /authorReimb do not have a navbar listing because 
             they will be accessed within the viewReimb page */}
           </Switch>

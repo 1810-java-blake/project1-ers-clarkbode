@@ -14,4 +14,6 @@ public interface ReimbursementService {
 	int addReimbursement(Reimbursement newReimb);
 	
 	void resolveReimbursement(int reimbId, int userId, int newStatusId);
+
+	Reimbursement findById(int id);
 }

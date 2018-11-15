@@ -1,0 +1,12 @@
+Todo:
+Add Login Functionality
+	- follow blake's example (actual behavior is in userjdbc)
+	- for the front-end, do some research on Context in react to handle moving the credentials around
+Add view table functionality
+	- Resolve reimbursement
+	- View reimbursements by author
+	- Tables should display the NAME of users and status instead of their id (should be doable with a SQL JOIN in the jdbc)
+	- submitted and resolved should be displayed in readable date-time format
+
+Beautify
+	- Bootstrap grid

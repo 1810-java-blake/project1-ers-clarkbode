@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.model.Reimbursement;
+import com.revature.model.User;
 import com.revature.services.ReimbursementService;
 import com.revature.util.ResponseMapper;
 
@@ -63,8 +64,10 @@ public class ReimbursementController {
 		} else if (uriArray.length == 2) { //reimbursement/<id>
 			int id = Integer.parseInt(uriArray[1]);
 			log.info("Retrieving Reimbursement with id: " + id);
-			// Reimbursement reimb = rs.findById(id); //This method isn't part of the
-			// requirements. Is there a problem leaving it empty?
+			Reimbursement reimb = rs.findById(id); 
+			System.out.println(reimb);
+			ResponseMapper.convertAndAttach(reimb, resp);
+			return;
 		} else if (uriArray.length == 3 && uriArray[1].equals("status")) { //reimbursement/status/<statusid#>
 			// String status = uriArray[2];
 			int status = Integer.parseInt(uriArray[2]); // if there's a way to make this a string easily, I may want to
@@ -80,7 +83,7 @@ public class ReimbursementController {
 			int newStatusId = Integer.parseInt(uriArray[4]);
 			log.info("User " + userId + " Setting reimbursement status to: " + newStatusId);
 			rs.resolveReimbursement(reimbId, userId, newStatusId);
-			//I don't need any return data, since the action should just be taken
+			
 			return;
 		}
 	}

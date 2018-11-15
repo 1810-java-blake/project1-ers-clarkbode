@@ -66,6 +66,7 @@ public class UserController {
 			int id = Integer.parseInt(uriArray[1]);
 			log.info("Retrieving user with id: " + id);
 			 User u = us.findById(id);
+			 System.out.println(u);
 			 ResponseMapper.convertAndAttach(u, resp);
 			 return;
 		}

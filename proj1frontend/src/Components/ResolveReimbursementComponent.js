@@ -1,12 +1,13 @@
 import React from 'react';
+import {ReimbursementTableComponent} from '../Components/ReimbursementTableComponent'
 
-export class newReimbursementComponent extends React.Component {
+export class resolveReimbursementComponent extends React.Component {
   //for login functionality: If a user arrives at this component 
   // and has not yet logged in, they should be sent to sign-in component
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { //change these for the new page
       amount: 0,
       description: '',
       receipt: '',
@@ -15,7 +16,7 @@ export class newReimbursementComponent extends React.Component {
   };
 
 submit = (event) => {
-  fetch('http://localhost:8080/project1/reimbursements/' ,
+  fetch('http://localhost:8080/project1/reimbursements/' , //change this to project1/reimbursements/resolve etc
   {
     headers: { "Content-Type":"application/x-www-form-urlencoded" },
     method: "post",
@@ -37,28 +38,28 @@ submit = (event) => {
 
  update = (event) => {
 
-    if(event.target.id ==='amountInput')
-    {
-      console.log("This is the amount")
-      this.setState({
-        ...this.state,
-        amount: event.target.value
-      })
-    }
-    if(event.target.id === 'descInput')
-    {
-      this.setState({
-        ...this.state,
-        description: event.target.value
-      })
-    }
-    if(event.target.id === 'receiptInput')
-    {
-      this.setState({
-        ...this.state,
-        receipt: event.target.value
-      })
-    }
+    // if(event.target.id ==='amountInput')
+    // {
+    //   console.log("This is the amount")
+    //   this.setState({
+    //     ...this.state,
+    //     amount: event.target.value
+    //   })
+    // }
+    // if(event.target.id === 'descInput')
+    // {
+    //   this.setState({
+    //     ...this.state,
+    //     description: event.target.value
+    //   })
+    // }
+    // if(event.target.id === 'receiptInput')
+    // {
+    //   this.setState({
+    //     ...this.state,
+    //     receipt: event.target.value
+    //   })
+    // }
     console.log(this.state)
 
    }
@@ -82,7 +83,10 @@ submit = (event) => {
           </select>
           <button className="btn btn-primary" onClick = {this.submit}>Submit</button>
         </form>
+        <ReimbursementTableComponent />
       </div>
+
+
     )
   }
 }

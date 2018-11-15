@@ -12,9 +12,19 @@ export class ReimbursementTableComponent extends React.PureComponent{
         }
     };
 
+    // timeDisplay() //this works, but I need to figure out how to link the output into the table
+    // {
+    //     var tempDate = this.state.reimbs.reimb_submitted
+    //     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
+        
+    //     return (
+    //       date
+    //     );
+    // }
+
+    
+
     componentDidMount() {
-
-
 
         fetch('http://localhost:8080/project1/reimbursements/') // need to find the correct URL here
             .then(res => res.json())
