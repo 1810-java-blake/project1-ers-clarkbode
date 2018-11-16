@@ -26,7 +26,7 @@ public class UserController {
 
 	void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String method = req.getMethod();
-		log.trace("reqiest made to user controller with method: " + req.getMethod());
+		log.trace("request made to user controller with method: " + req.getMethod());
 		switch (method) {
 		case "GET":
 			processGet(req, resp);

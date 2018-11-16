@@ -1,6 +1,7 @@
 Todo:
 Add Login Functionality
-	- follow blake's example (actual behavior is in userjdbc)
+	- Back end process for accepting/rejecting a login is done X
+	- Need to do the front-end handling and check on role/session handling
 	- for the front-end, do some research on Context in react to handle moving the credentials around
 Add view table functionality
 	- Resolve reimbursement X
