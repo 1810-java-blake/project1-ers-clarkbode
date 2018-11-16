@@ -1,5 +1,6 @@
 package com.revature.daos;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.model.Reimbursement;
@@ -10,11 +11,13 @@ public interface ReimbursementDao {
 	
 	int addReimbursement(Reimbursement newReimb);
 	
-	void resolveReimbursement(int reimbId, int userId, int newStatusId);
+	void resolveReimbursement(int reimbId, int userId, int newStatusId, Timestamp resolved);
 	
 	List<Reimbursement> findAll();
 	List<Reimbursement> findAllByStatus(int status);
 
 	Reimbursement findById(int id);  
+	
+	List<Reimbursement> findAllByAuthor(int author);
 
 }

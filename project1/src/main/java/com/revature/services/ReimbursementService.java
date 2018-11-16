@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import com.revature.model.*;
 
@@ -11,9 +12,11 @@ public interface ReimbursementService {
 	
 	List<Reimbursement> findAllByStatus(int status);
 	
+	List<Reimbursement> findAllByAuthor(int author);
+	
 	int addReimbursement(Reimbursement newReimb);
 	
-	void resolveReimbursement(int reimbId, int userId, int newStatusId);
+	void resolveReimbursement(int reimbId, int userId, int newStatusId, Timestamp resolved);
 
 	Reimbursement findById(int id);
 }

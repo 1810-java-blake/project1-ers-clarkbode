@@ -1,11 +1,13 @@
 package com.revature.daos;
 
+//import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 import org.apache.log4j.Logger;
 import com.revature.model.Reimbursement;
@@ -136,15 +138,18 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	}
 
 	@Override
-	public void resolveReimbursement(int reimbId, int userId, int newStatusId) {
+	public void resolveReimbursement(int reimbId, int userId, int newStatusId, Timestamp resolved) {
 
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			PreparedStatement ps = conn.prepareStatement("UPDATE ers_reimbursement\r\n"
-					+ "SET reimb_status_id = ?, reimb_resolver = ?\r\n" + "WHERE reimb_id ="
+					+ "SET reimb_status_id = ?, reimb_resolver = ?, reimb_resolved = ?\r\n" + "WHERE reimb_id ="
 					+ reimbId); 
 			
 			ps.setInt(1, newStatusId);
 			ps.setInt(2, userId);
+			ps.setTimestamp(3, resolved);
+			System.out.println("jdbc changing reimbursement to " + newStatusId);
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -152,6 +157,32 @@ public class ReimbursementJdbc implements ReimbursementDao {
 		}
 
 		return;
+	}
+
+	@Override
+	public List<Reimbursement> findAllByAuthor(int author) {
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author_id = ? "); // SQL
+																														// statement
+
+			ps.setInt(1, author);
+			log.debug("finding reimb with the author_id " + author);
+
+			ResultSet rs = ps.executeQuery();
+
+			// loop to populate a list with the items found in the ps.
+			List<Reimbursement> reimbs = new ArrayList<>();
+
+			while (rs.next()) {
+				reimbs.add(extractFromResultSet(rs));
+			}
+			return reimbs;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("DERP FINDALLBYAUTHOR");
+		}
+		return null;
 	}
 
 }

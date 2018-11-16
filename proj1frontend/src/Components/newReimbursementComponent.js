@@ -59,6 +59,13 @@ submit = (event) => {
         receipt: event.target.value
       })
     }
+    if(event.target.id === 'typeInput')
+    {
+      this.setState({
+        ...this.state,
+        type: event.target.value
+      })
+    }
     console.log(this.state)
 
    }

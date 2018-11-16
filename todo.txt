@@ -3,9 +3,11 @@ Add Login Functionality
 	- follow blake's example (actual behavior is in userjdbc)
 	- for the front-end, do some research on Context in react to handle moving the credentials around
 Add view table functionality
-	- Resolve reimbursement
+	- Resolve reimbursement X
 	- View reimbursements by author
+		- backend is ready, just need to write front-end
 	- Tables should display the NAME of users and status instead of their id (should be doable with a SQL JOIN in the jdbc)
+		- Progress: I can display name of users, but not status yet. joining more than 2 tables is a mess
 	- submitted and resolved should be displayed in readable date-time format
 
 Beautify

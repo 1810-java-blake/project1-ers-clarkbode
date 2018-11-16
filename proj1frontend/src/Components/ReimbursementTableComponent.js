@@ -23,6 +23,26 @@ export class ReimbursementTableComponent extends React.PureComponent{
     // }
 
     
+    sort = (event) => {
+        if(event.target.id === "byAuthor")
+        {
+            fetch('http://localhost:8080/project1/reimbursements/') // find by author isn't implemented just yet
+            .then(res => res.json())
+            .then(data => {
+
+                this.setState({
+                    ...this.state,
+                    reimbs: data
+                })
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        }
+    }
+
 
     componentDidMount() {
 
@@ -45,6 +65,8 @@ export class ReimbursementTableComponent extends React.PureComponent{
     render() {
         return (
             <div id="reimb-row">
+            <button id="byAuthor" className="btn btn-primary" onClick = {this.sort}>Search By Author</button> <br></br>
+            {/* <button className="btn btn-primary" onClick = {this.submit}>Search By ID</button> */}
                 <table className="table table-bordered" >
                     <thead>
                         <tr>

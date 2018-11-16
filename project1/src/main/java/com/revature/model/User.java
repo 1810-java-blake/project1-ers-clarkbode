@@ -11,6 +11,7 @@ public class User {
 	private String lastName;
 	private String email; //I THINK this converts properly?
 	private int role_id;
+	private UserRole role;
 	
 	private List<Reimbursement> activeReimbs;
 	
@@ -21,8 +22,8 @@ public class User {
 	
 	
 
-	public User(int user_id, String username, String password, String firstName, String lastName, String email,
-			int role_id) {
+	public User(int user_id, String username, String password, String firstName, String lastName, String email, int role_id,
+			UserRole role) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
@@ -31,8 +32,13 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.role_id = role_id;
+		this.role = role;
 	}
-
+	
+	
+	public UserRole getRole() {
+		return role;
+	}
 
 	public int getUser_id() {
 		return user_id;
@@ -90,7 +96,9 @@ public class User {
 		this.role_id = role_id;
 	}
 
-
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
 
 	public List<Reimbursement> getActiveReimbs() {
 		return activeReimbs;

@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.daos.ReimbursementDao;
@@ -32,9 +33,9 @@ private ReimbursementDao rd = ReimbursementDao.currentImplementation;
 
 
 	@Override
-	public void resolveReimbursement(int reimbId, int userId, int newStatusId) {
+	public void resolveReimbursement(int reimbId, int userId, int newStatusId, Timestamp resolved) {
 		// TODO Auto-generated method stub
-		rd.resolveReimbursement(reimbId, userId, newStatusId);
+		rd.resolveReimbursement(reimbId, userId, newStatusId, resolved);
 		//return; No return because this is a void
 	}
 
@@ -43,6 +44,13 @@ private ReimbursementDao rd = ReimbursementDao.currentImplementation;
 	public Reimbursement findById(int id) {
 		// TODO Auto-generated method stub
 		return rd.findById(id);
+	}
+
+
+	@Override
+	public List<Reimbursement> findAllByAuthor(int author) {
+		// TODO Auto-generated method stub
+		return rd.findAllByAuthor(author);
 	}
 
 

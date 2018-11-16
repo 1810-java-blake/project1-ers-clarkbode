@@ -24,7 +24,7 @@ public class ReimbursementController {
 
 	void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String method = req.getMethod();
-		log.trace("reqiest made to reimbursement controller with method: " + req.getMethod());
+		log.trace("request made to reimbursement controller with method: " + req.getMethod());
 		switch (method) {
 		case "GET":
 			processGet(req, resp);
@@ -77,17 +77,15 @@ public class ReimbursementController {
 			ResponseMapper.convertAndAttach(reimbs, resp);
 			return;
 		}
-		else if (uriArray.length == 3 && uriArray[1].equals("resolve")) { //reimbursement/resolve/<UserId>/<reimbId>/<newStatusId>
-			int userId = Integer.parseInt(uriArray[2]);
-			int reimbId = Integer.parseInt(uriArray[3]);
-			int newStatusId = Integer.parseInt(uriArray[4]);
-			log.info("User " + userId + " Setting reimbursement status to: " + newStatusId);
-			rs.resolveReimbursement(reimbId, userId, newStatusId);
-			
+		else if (uriArray.length == 3 && uriArray[1].equals("author")) { //reimbursement/author/<authorid#>
+			int author = Integer.parseInt(uriArray[2]); // if there's a way to make this a string easily, I may want to
+			// change it back. Ask blake.
+			log.info("finding all reimbursements by status: " + author);
+			List<Reimbursement> reimbs = rs.findAllByStatus(author);
+			ResponseMapper.convertAndAttach(reimbs, resp);
 			return;
 		}
 	}
-	// processPost?
 
 	private void processPost(HttpServletRequest req, HttpServletResponse resp)
 			throws JsonParseException, JsonMappingException, IOException {
@@ -95,11 +93,21 @@ public class ReimbursementController {
 		String context = "project1";
 		uri = uri.substring(context.length() + 2, uri.length());
 		
-		if (!"reimbursements/".equals(uri)) {
+		if (!"reimbursements/".equals(uri) && !"reimbursements/resolve".equals(uri)) { //this is super brute force, I'll fix it later
 			log.debug("could not recognize request with uri: " + uri);
 			resp.setStatus(404);
 			return;
-		} else {
+		} 
+		if("reimbursements/resolve".equals(uri)) {
+			Reimbursement tempR = om.readValue(req.getReader(), Reimbursement.class); 
+			//the front end creates a "dummy" reimb and uses it's values to set a real reimb
+			
+			rs.resolveReimbursement(tempR.getReimb_id(), tempR.getReimb_resolver(), tempR.getReimb_status_id(), tempR.getReimb_resolved());
+			System.out.println("Tried to change a reimbursement to status: ");
+			return;
+			
+		}
+		else {
 			log.info("saving new reimbursement");
 			Reimbursement r = om.readValue(req.getReader(), Reimbursement.class);
 			rs.addReimbursement(r); 

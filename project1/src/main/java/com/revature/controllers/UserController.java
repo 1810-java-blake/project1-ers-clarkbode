@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.dto.Credential;
 import com.revature.model.Reimbursement;
 import com.revature.model.User;
 import com.revature.services.ReimbursementService;
@@ -25,7 +26,7 @@ public class UserController {
 
 	void process(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String method = req.getMethod();
-		log.trace("reqiest made to reimbursement controller with method: " + req.getMethod());
+		log.trace("reqiest made to user controller with method: " + req.getMethod());
 		switch (method) {
 		case "GET":
 			processGet(req, resp);
@@ -57,9 +58,9 @@ public class UserController {
 		System.out.println(Arrays.toString(uriArray));
 
 		if (uriArray.length == 1) {
-			System.out.println("Retrieving all Reimbursements");
-			List<User> reimbs = us.findAll();
-			ResponseMapper.convertAndAttach(reimbs, resp);
+			System.out.println("Retrieving all Users");
+			List<User> users = us.findAll();
+			ResponseMapper.convertAndAttach(users, resp);
 			return;
 
 		} else if (uriArray.length == 2) {
@@ -84,26 +85,45 @@ public class UserController {
 
 	private void processPost(HttpServletRequest req, HttpServletResponse resp)
 			throws JsonParseException, JsonMappingException, IOException {
+		
 		String uri = req.getRequestURI();
 		String context = "project1";
 		uri = uri.substring(context.length() + 2, uri.length());
-		if (!"users".equals(uri)) {
-			log.debug("could not recognize request with uri: " + uri);
+		if ("users".equals(uri)) {
+			log.info("saving new user");
+		} else if ("users/login".equals(uri)) {
+			log.info("attempting to log in");
+			Credential cred = om.readValue(req.getReader(), Credential.class);
+			log.info("Login success!");
+			if(!us.login(cred, req.getSession())) {
+				resp.setStatus(403);
+			}
+		} else {
 			resp.setStatus(404);
 			return;
-		} else {
-			String role = (String) req.getSession().getAttribute("role");
-			if (!"ADMIN".equals(role)) {
-				resp.setStatus(403);
-				return;
-			} else {
-				log.info("saving new user");
-				User u = om.readValue(req.getReader(), User.class);
-				// rs.AddReimbursement(r); (NEEDS TO BE IMPLEMENTED
-				resp.getWriter().write("" + u.getUser_id());
-				resp.setStatus(201);
-				return;
-			}
 		}
+	
 	}
+//		String uri = req.getRequestURI();
+//		String context = "project1";
+//		uri = uri.substring(context.length() + 2, uri.length());
+//		if (!"users".equals(uri)) {
+//			log.debug("could not recognize request with uri: " + uri);
+//			resp.setStatus(404);
+//			return;
+//		} else {
+//			String role = (String) req.getSession().getAttribute("role");
+//			if (!"manager".equals(role)) {
+//				resp.setStatus(403);
+//				return;
+//			} else {
+//				log.info("saving new user");
+//				User u = om.readValue(req.getReader(), User.class);
+//				// rs.AddReimbursement(r); (NEEDS TO BE IMPLEMENTED
+//				resp.getWriter().write("" + u.getUser_id());
+//				resp.setStatus(201);
+//				return;
+//			}
+//		}
+//	}
 }
