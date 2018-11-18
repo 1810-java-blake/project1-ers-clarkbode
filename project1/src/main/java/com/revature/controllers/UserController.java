@@ -94,10 +94,35 @@ public class UserController {
 		} else if ("users/login".equals(uri)) {
 			log.info("attempting to log in");
 			Credential cred = om.readValue(req.getReader(), Credential.class);
-			log.info("Login success!");
+		
 			if(!us.login(cred, req.getSession())) {
+				System.out.println("Login failed");
 				resp.setStatus(403);
 			}
+			log.info("Login success!");
+			User u = us.findbyUsernameAndPassword(cred.getUsername(), cred.getPassword());
+			int uRole = u.getRole_id();
+			ResponseMapper.convertAndAttach(uRole, resp);
+		}
+		else if ("users/loginManager".equals(uri))
+			{
+			log.info("attempting to log in as manager");
+			Credential cred = om.readValue(req.getReader(), Credential.class);
+		
+			if(!us.login(cred, req.getSession())) {
+				System.out.println("Login failed");
+				resp.setStatus(403);
+			}
+			log.info("Login success!");
+			User u = us.findbyUsernameAndPassword(cred.getUsername(), cred.getPassword());
+			int uRole = u.getRole_id();
+			if (uRole != 2)
+			{
+				System.out.println("NOT A MANAGER!");
+				resp.setStatus(403);
+			}
+			ResponseMapper.convertAndAttach(uRole, resp);
+			
 		} else {
 			resp.setStatus(404);
 			return;

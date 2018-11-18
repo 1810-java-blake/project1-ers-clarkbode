@@ -14,9 +14,11 @@ public interface ReimbursementService {
 	
 	List<Reimbursement> findAllByAuthor(int author);
 	
+	List<Reimbursement> findById(int id);
+	
 	int addReimbursement(Reimbursement newReimb);
 	
 	void resolveReimbursement(int reimbId, int userId, int newStatusId, Timestamp resolved);
 
-	Reimbursement findById(int id);
+	
 }

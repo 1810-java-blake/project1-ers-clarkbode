@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export class ReimbursementTableComponent extends React.PureComponent{
+export class ReimbursementTableComponent extends React.PureComponent {
 
-    
+
     constructor(props) {
         super(props);
         this.state = {
             reimbs: [],
-            count: 1
+            count: 1,
+            authorId: 0,
+            reimbId: 0
         }
     };
 
@@ -16,30 +19,70 @@ export class ReimbursementTableComponent extends React.PureComponent{
     // {
     //     var tempDate = this.state.reimbs.reimb_submitted
     //     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
-        
+
     //     return (
     //       date
     //     );
     // }
+    update = (event) => {
 
-    
-    sort = (event) => {
-        if(event.target.id === "byAuthor")
-        {
-            fetch('http://localhost:8080/project1/reimbursements/') // find by author isn't implemented just yet
-            .then(res => res.json())
-            .then(data => {
-
-                this.setState({
-                    ...this.state,
-                    reimbs: data
-                })
+        if (event.target.id === 'byAuthorText') {
+            this.setState({
+                ...this.state,
+                authorId: event.target.value
 
             })
-            .catch(err => {
-                console.log(err);
-            });
+            console.log(this.state.authorId)
+        }
+        if(event.target.id === 'byIdText')
+        {
+            this.setState({
+                ...this.state,
+                reimbId: event.target.value
+            })
+            
+        }
 
+        console.log(this.state)
+
+    }
+
+    sort = (event) => {
+        if (event.target.id === "byAuthor") {
+            let fetchUrl = 'http://localhost:8080/project1/reimbursements/author/' + this.state.authorId
+            fetch(fetchUrl) // find by author isn't implemented just yet
+                .then(res => res.json())
+                .then(data => {
+
+
+                    this.setState({
+                        ...this.state,
+                        reimbs: data
+                    })
+                    console.log(this.state)
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        }
+        if (event.target.id === "byID") {
+            let fetchUrl = 'http://localhost:8080/project1/reimbursements/' + this.state.reimbId
+            fetch(fetchUrl) // find by author isn't implemented just yet
+                .then(res => res.json())
+                .then(data => {
+
+
+                    this.setState({
+                        ...this.state,
+                        reimbs: data
+                    })
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 
@@ -49,6 +92,7 @@ export class ReimbursementTableComponent extends React.PureComponent{
         fetch('http://localhost:8080/project1/reimbursements/') // need to find the correct URL here
             .then(res => res.json())
             .then(data => {
+
 
                 this.setState({
                     ...this.state,
@@ -65,8 +109,12 @@ export class ReimbursementTableComponent extends React.PureComponent{
     render() {
         return (
             <div id="reimb-row">
-            <button id="byAuthor" className="btn btn-primary" onClick = {this.sort}>Search By Author</button> <br></br>
-            {/* <button className="btn btn-primary" onClick = {this.submit}>Search By ID</button> */}
+                <input id="byAuthorText" type="text" onChange={this.update}></input>
+                <button id="byAuthor" className="btn btn-primary" onClick={this.sort}>Search By Author ID</button>
+                <input id="byIdText" type="text" onChange={this.update}></input>
+                <button id="byID" className="btn btn-primary" onClick={this.sort}>Search By Request ID</button>
+                <Link to='/newReimb'><button id="CreateNew" className="btn btn-success">Create a New Request</button></Link>
+                {/* <button className="btn btn-primary" onClick = {this.submit}>Search By ID</button> */}
                 <table className="table table-bordered" >
                     <thead>
                         <tr>

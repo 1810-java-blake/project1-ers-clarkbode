@@ -61,14 +61,14 @@ public class ReimbursementController {
 			ResponseMapper.convertAndAttach(reimbs, resp);
 			return;
 
-		} else if (uriArray.length == 2) { //reimbursement/<id>
+		} else if (uriArray.length == 2) { //reimbursements/<id>
 			int id = Integer.parseInt(uriArray[1]);
 			log.info("Retrieving Reimbursement with id: " + id);
-			Reimbursement reimb = rs.findById(id); 
+			List<Reimbursement> reimb = rs.findById(id); 
 			System.out.println(reimb);
 			ResponseMapper.convertAndAttach(reimb, resp);
 			return;
-		} else if (uriArray.length == 3 && uriArray[1].equals("status")) { //reimbursement/status/<statusid#>
+		} else if (uriArray.length == 3 && uriArray[1].equals("status")) { //reimbursements/status/<statusid#>
 			// String status = uriArray[2];
 			int status = Integer.parseInt(uriArray[2]); // if there's a way to make this a string easily, I may want to
 														// change it back. Ask blake.
@@ -77,11 +77,11 @@ public class ReimbursementController {
 			ResponseMapper.convertAndAttach(reimbs, resp);
 			return;
 		}
-		else if (uriArray.length == 3 && uriArray[1].equals("author")) { //reimbursement/author/<authorid#>
+		else if (uriArray.length == 3 && uriArray[1].equals("author")) { //reimbursements/author/<authorid#>
 			int author = Integer.parseInt(uriArray[2]); // if there's a way to make this a string easily, I may want to
 			// change it back. Ask blake.
 			log.info("finding all reimbursements by status: " + author);
-			List<Reimbursement> reimbs = rs.findAllByStatus(author);
+			List<Reimbursement> reimbs = rs.findAllByAuthor(author);
 			ResponseMapper.convertAndAttach(reimbs, resp);
 			return;
 		}

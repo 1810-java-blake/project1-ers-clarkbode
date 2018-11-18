@@ -24,20 +24,13 @@ export class AppNav extends React.Component {
               </li>
 
               <li className="nav-item active dropdown">
-              <div className="nav-link nav-item dropdown-toggle pointer" id="reimbs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reimbursement Requests</div>
-              <div className="dropdown-menu" aria-labelledby="reimbs-dropdown">
-                <div className="dropdown-item"><Link to="/viewReimb" className="unset-anchor nav-link">View Reimbursement Requests</Link></div>
-                <div className="dropdown-item"><Link to="/newReimb" className="unset-anchor nav-link">Create a New Request</Link></div>
-                <div className="dropdown-item"><Link to="/resolveReimb" className="Unset-anchor nav-link">Approve/Deny a Request</Link></div>
-              </div>
+              {/* <div className="nav-link nav-item dropdown-toggle pointer" id="reimbs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reimbursement Requests</div> */}
+              {/* <div className="dropdown-menu dropdown-menu-right" aria-labelledby="reimbs-dropdown"> */}
+                {/* <div className="dropdown-item"><Link to="/viewReimb" className="unset-anchor nav-link">View Reimbursement Requests</Link></div>
+                <div className="dropdown-item"><Link to="/newReimb" className="unset-anchor nav-link">Create a New Request</Link></div> */}
+                {/* <div className="dropdown-item"><Link to="/resolveReimb" className="Unset-anchor nav-link">Approve/Deny a Request</Link></div> */}
+              {/* </div> */}
               </li>
-              {/* <li className="nav-item active dropdown">
-                <div className="nav-link nav-item dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">League</div>
-                <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                  <div className="dropdown-item"><Link to="/view-champions" className="unset-anchor nav-link active">View Champions</Link></div>
-                  <div className="dropdown-item"><Link to="/add-champion" className="unset-anchor nav-link active">Add Champion</Link></div>
-                </div>
-              </li> */}
             </ul>
           </div>
         </nav>

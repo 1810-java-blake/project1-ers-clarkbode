@@ -110,31 +110,54 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	}
 	
 	@Override
-	public Reimbursement findById(int id) {
+	public List<Reimbursement> findById(int id) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			log.debug("finding reimbursement with the id " + id);
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement\r\n" + 
 					"WHERE reimb_id = " + id); // SQL
 
+			//ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
+			
+			log.debug("finding reimb with the reimb_id " + id);
 
-			if (rs.next()) {
-				log.trace("reimb found with id " + id + " attempting to extract result set");
-				Reimbursement foundReimb = new Reimbursement(rs.getInt("reimb_id"), rs.getDouble("reimb_amount"), 
-						rs.getTimestamp("reimb_submitted"), rs.getTimestamp("reimb_resolved"), rs.getString("reimb_description"), 
-						rs.getString("reimb_receipt"), rs.getInt("reimb_author"), rs.getInt("reimb_resolver"), 
-						rs.getInt("reimb_status_id"), rs.getInt("reimb_type_id"));
-				
-				//System.out.println("I AM RETURNING: " + foundReimb);
-				return foundReimb;
 
+			// loop to populate a list with the items found in the ps.
+			List<Reimbursement> reimbs = new ArrayList<>();
+
+			while (rs.next()) {
+				reimbs.add(extractFromResultSet(rs));
 			}
+			return reimbs;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Derp reimbursement findbyID");
+			System.out.println("DERP FINALLBYID");
 		}
 		return null;
+//
+//			if (rs.next()) {
+//				log.trace("reimb found with id " + id + " attempting to extract result set");
+//				Reimbursement foundReimb = new Reimbursement(rs.getInt("reimb_id"), rs.getDouble("reimb_amount"), 
+//						rs.getTimestamp("reimb_submitted"), rs.getTimestamp("reimb_resolved"), rs.getString("reimb_description"), 
+//						rs.getString("reimb_receipt"), rs.getInt("reimb_author"), rs.getInt("reimb_resolver"), 
+//						rs.getInt("reimb_status_id"), rs.getInt("reimb_type_id"));
+//				
+//				//System.out.println("I AM RETURNING: " + foundReimb);
+//				if (foundReimb == null)
+//				{
+//					System.out.println("There is no such reimbursement");
+//					
+//				}
+//				return foundReimb;
+//
+//			}
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("Derp reimbursement findbyID");
+//		}
+//		return null;
 	}
 
 	@Override
@@ -162,7 +185,7 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	@Override
 	public List<Reimbursement> findAllByAuthor(int author) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author_id = ? "); // SQL
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author = ? "); // SQL
 																														// statement
 
 			ps.setInt(1, author);

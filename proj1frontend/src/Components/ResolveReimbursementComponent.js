@@ -9,7 +9,8 @@ export class resolveReimbursementComponent extends React.Component {
     super(props);
     this.state = { //change these for the new page
       id: 0,
-      newStatus: 0
+      newStatus: 0,
+      resolver: 0
     }
   };
 
@@ -28,7 +29,7 @@ export class resolveReimbursementComponent extends React.Component {
           body: JSON.stringify({
 
             "reimb_id": this.state.id,
-            "reimb_resolver": 1, //THIS IS A TEMPORARY HARD-CODE, WILL BE REPLACED WHEN LOGIN FUNCITONALITY IS IN PLACE
+            "reimb_resolver": this.state.resolver, //THIS IS A TEMPORARY HARD-CODE, WILL BE REPLACED WHEN LOGIN FUNCITONALITY IS IN PLACE
             "reimb_status_id": this.state.newStatus,
             "reimb_resolved": Date.now()
           })
@@ -40,29 +41,6 @@ export class resolveReimbursementComponent extends React.Component {
 
 
   update = (event) => {
-
-    // if(event.target.id ==='amountInput')
-    // {
-    //   console.log("This is the amount")
-    //   this.setState({
-    //     ...this.state,
-    //     amount: event.target.value
-    //   })
-    // }
-    // if(event.target.id === 'descInput')
-    // {
-    //   this.setState({
-    //     ...this.state,
-    //     description: event.target.value
-    //   })
-    // }
-    // if(event.target.id === 'receiptInput')
-    // {
-    //   this.setState({
-    //     ...this.state,
-    //     receipt: event.target.value
-    //   })
-    // }
 
     if (event.target.id === 'idInput') {
       this.setState({
@@ -76,12 +54,18 @@ export class resolveReimbursementComponent extends React.Component {
         newStatus: event.target.value
       })
     }
+    if (event.target.id === 'resolverInput') {
+      this.setState({
+        ...this.state,
+        resolver: event.target.value
+      })
+    }
 
   }
 
   render() {
     return (
-      <div>
+      <div id="statusFormDiv">
         <form>
           Reimbursement ID: <br></br>
           <input id="idInput" type="int" onChange={this.update}></input>{/*<button type="button" onClick={this.update}>Search By ID</button>*/} <br></br>
@@ -96,8 +80,9 @@ export class resolveReimbursementComponent extends React.Component {
 
           </select>
 
+          <button className="btn btn-primary" onClick={this.submit}>Submit</button>
         </form>
-        <button className="btn btn-primary" onClick={this.submit}>Submit</button>
+
         <ReimbursementTableComponent />
       </div>
 

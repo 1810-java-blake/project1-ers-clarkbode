@@ -41,7 +41,7 @@ private ReimbursementDao rd = ReimbursementDao.currentImplementation;
 
 
 	@Override
-	public Reimbursement findById(int id) {
+	public List<Reimbursement> findById(int id) {
 		// TODO Auto-generated method stub
 		return rd.findById(id);
 	}

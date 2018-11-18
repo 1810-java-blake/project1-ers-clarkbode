@@ -86,7 +86,9 @@ public class UserJdbc implements UserDao {
 				ps.setString(2, password);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
-					return extractFromResultSet(rs);
+					User u = extractFromResultSet(rs);
+					System.out.println("Returning the user's info: " + u.toString());
+					return u;
 				}
 			} catch (SQLException e) {
 				System.out.println("DERP FINDBYUSERNAMEANDPASS");

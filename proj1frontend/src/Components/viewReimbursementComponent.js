@@ -1,4 +1,5 @@
 import React from 'react';
+import {ReimbursementTableComponent} from '../Components/ReimbursementTableComponent'
 
 export class viewReimbursementComponent extends React.Component {
         //for login functionality: If a user arrives at this component 
@@ -11,9 +12,12 @@ export class viewReimbursementComponent extends React.Component {
     When prompted (probably with a button) the table should display a reimbursement with the given id */
   render() {
     return (
-      <div>
-        View Reimbursements!
+      <div id="statusFormDiv">
+
+        <ReimbursementTableComponent />
       </div>
+
+
     )
   }
 }

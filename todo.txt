@@ -2,6 +2,8 @@ Todo:
 Add Login Functionality
 	- Back end process for accepting/rejecting a login is done X
 	- Need to do the front-end handling and check on role/session handling
+	- Blake has basic functionality in his react-demo, but it would need to be modified to get any info from the server
+		- POST requests can return data in the body. Experiment with this.
 	- for the front-end, do some research on Context in react to handle moving the credentials around
 Add view table functionality
 	- Resolve reimbursement X
