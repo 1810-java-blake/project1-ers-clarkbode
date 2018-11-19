@@ -11,19 +11,22 @@ export class ReimbursementTableComponent extends React.PureComponent {
             reimbs: [],
             count: 1,
             authorId: 0,
-            reimbId: 0
+            reimbId: 0,
+            submittedTime: null
         }
     };
 
-    // timeDisplay() //this works, but I need to figure out how to link the output into the table
-    // {
-    //     var tempDate = this.state.reimbs.reimb_submitted
-    //     var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
+    timeDisplay(tempDate) //this doesn't work because the values are coming through as "number" instead of "date"
+    {
+        //var tempDate = this.state.reimbs.reimb_submitted
+        var date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate() +' '+ tempDate.getHours()+':'+ tempDate.getMinutes()+':'+ tempDate.getSeconds();
 
-    //     return (
-    //       date
-    //     );
-    // }
+        //this.setState({ ...this.state, submittedTime: date })
+        return (
+          date
+        );
+    }
+
     update = (event) => {
 
         if (event.target.id === 'byAuthorText') {
@@ -103,6 +106,7 @@ export class ReimbursementTableComponent extends React.PureComponent {
             .catch(err => {
                 console.log(err);
             });
+            
 
     };
 
@@ -119,19 +123,21 @@ export class ReimbursementTableComponent extends React.PureComponent {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">amount</th>
-                            <th scope="col">submitted</th>
-                            <th scope="col">Resolved</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Submitted</th>
+                            <th scope="col">Date Resolved</th>
                             <th scope="col">Description</th>
                             <th scope="col">Reciept</th>
                             <th scope="col">Author ID</th>
+                            <th scope="col">Author First Name</th>
+                            <th scope="col">Author Last Name</th>
                             <th scope="col">Resolver ID</th>
-                            <th scope="col">status ID</th>
-                            <th scope="col">Type ID</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Type</th>
                         </tr>
                     </thead>
                     <tbody id="reimb-container">
-                        {this.state.reimbs.map((reimb, index) => ( //we don't use index here for this project. Safe to remove?
+                        {this.state.reimbs.map((reimb, index) => ( console.log(typeof(reimb.reimb_submitted)),
                             <tr>
                                 {/* <th scope="row">{index + 1}</th> */}
                                 <td>{reimb.reimb_id}</td>
@@ -141,9 +147,11 @@ export class ReimbursementTableComponent extends React.PureComponent {
                                 <td>{reimb.reimb_description}</td>
                                 <td>{reimb.reimb_receipt}</td>
                                 <td>{reimb.reimb_author}</td>
+                                <td>{reimb.user_first_name}</td>
+                                <td>{reimb.user_last_name}</td>
                                 <td>{reimb.reimb_resolver}</td>
-                                <td>{reimb.reimb_status_id}</td>
-                                <td>{reimb.reimb_type_id}</td>
+                                <td>{reimb.reimb_status}</td>
+                                <td>{reimb.reimb_type}</td>
 
                             </tr>
                         ))}

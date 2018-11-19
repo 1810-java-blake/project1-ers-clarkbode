@@ -82,14 +82,7 @@ export class SignInComponent extends React.Component {
         }
         console.log(res.json())
       })
-      // .then(res => res.json())
-      // .then(data => { //I have no idea if this part is correct
-      //   console.log(data)
-      //   this.setState({
-      //     User: data
-      //   })
-        
-      // })
+
       .catch(err => {
         console.log(err);
       })
@@ -125,9 +118,11 @@ export class SignInComponent extends React.Component {
           type="submit" onClick={this.submitEmployee}>
           Sign in
         </button>
-        <button clasName="btn btn-lg btn-primary btn-block col-md-auto" type="submit" onClick={this.submitManager}> Sign in as Manager
+        <button className="btn btn-lg btn-info btn-block col-md-auto"
+          type="submit" onClick={this.submitManager}>
+          Sign in as Manager
         </button>
-        <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+
       </form>
       </div >
       </>

@@ -19,7 +19,8 @@ public class ReimbursementJdbc implements ReimbursementDao {
 		return new Reimbursement(rs.getInt("reimb_id"), rs.getDouble("reimb_amount"),
 				rs.getTimestamp("reimb_submitted"), rs.getTimestamp("reimb_resolved"),
 				rs.getString("reimb_description"), rs.getString("reimb_receipt"), rs.getInt("reimb_author"),
-				rs.getInt("reimb_resolver"), rs.getInt("reimb_status_id"), rs.getInt("reimb_type_id"));
+				rs.getInt("reimb_resolver"), rs.getInt("reimb_status_id"), rs.getInt("reimb_type_id"), 
+				rs.getString("reimb_status"), rs.getString("reimb_type"), rs.getString("user_first_name"), rs.getString("user_last_name"));
 	}
 
 	private Logger log = Logger.getRootLogger(); // for some reason getRootLogger() doesn't exist
@@ -64,8 +65,16 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	@Override
 	public List<Reimbursement> findAll() {
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement"); // SQL statement to find
-																								// all the
+			//PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement"); // SQL statement to find
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT  reimb_id, r.reimb_author, r.reimb_resolver, user_first_name, user_last_name, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_status, reimb_type, r.reimb_status_id, r.reimb_type_id\r\n" + 
+					"FROM ers_users u\r\n" + 
+					"inner join ers_reimbursement r\r\n" + 
+					"on u.ers_users_id = r.reimb_author\r\n" + 
+					"inner join ers_reimbursement_status s\r\n" + 
+					"on r.reimb_status_id = s.reimb_status_id\r\n" + 
+					"inner join ers_reimbursement_type ty\r\n" + 
+					"on r.reimb_type_id = ty.reimb_type_id");																					// all the
 																								// reimbursements
 			ResultSet rs = ps.executeQuery();
 
@@ -86,10 +95,17 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	@Override
 	public List<Reimbursement> findAllByStatus(int status) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_status_id = ? "); // SQL
-																														// statement
+			PreparedStatement ps = conn.prepareStatement("SELECT  reimb_id, r.reimb_author, r.reimb_resolver, user_first_name, user_last_name, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_status, reimb_type, r.reimb_status_id, r.reimb_type_id\r\n" + 
+					"FROM ers_users u\r\n" + 
+					"inner join ers_reimbursement r\r\n" + 
+					"on u.ers_users_id = r.reimb_author\r\n" + 
+					"inner join ers_reimbursement_status s\r\n" + 
+					"on r.reimb_status_id = s.reimb_status_id\r\n" + 
+					"inner join ers_reimbursement_type ty\r\n" + 
+					"on r.reimb_type_id = ty.reimb_type_id\r\n" + 
+					"WHERE r.reimb_status_id = " + status); 
 
-			ps.setInt(1, status);
+			//ps.setInt(1, status);
 			log.debug("finding user with the id " + status);
 
 			ResultSet rs = ps.executeQuery();
@@ -113,8 +129,15 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	public List<Reimbursement> findById(int id) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 			log.debug("finding reimbursement with the id " + id);
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement\r\n" + 
-					"WHERE reimb_id = " + id); // SQL
+			PreparedStatement ps = conn.prepareStatement("SELECT  reimb_id, r.reimb_author, r.reimb_resolver, user_first_name, user_last_name, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_status, reimb_type, r.reimb_status_id, r.reimb_type_id\r\n" + 
+					"FROM ers_users u\r\n" + 
+					"inner join ers_reimbursement r\r\n" + 
+					"on u.ers_users_id = r.reimb_author\r\n" + 
+					"inner join ers_reimbursement_status s\r\n" + 
+					"on r.reimb_status_id = s.reimb_status_id\r\n" + 
+					"inner join ers_reimbursement_type ty\r\n" + 
+					"on r.reimb_type_id = ty.reimb_type_id\r\n" + 
+					"WHERE r.reimb_id = " + id); // SQL
 
 			//ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -185,10 +208,18 @@ public class ReimbursementJdbc implements ReimbursementDao {
 	@Override
 	public List<Reimbursement> findAllByAuthor(int author) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author = ? "); // SQL
+			PreparedStatement ps = conn.prepareStatement("SELECT  reimb_id, r.reimb_author, r.reimb_resolver, user_first_name, user_last_name, reimb_amount, reimb_submitted, reimb_resolved, reimb_description, reimb_receipt, reimb_status, reimb_type, r.reimb_status_id, r.reimb_type_id\r\n" + 
+					"FROM ers_users u\r\n" + 
+					"inner join ers_reimbursement r\r\n" + 
+					"on u.ers_users_id = r.reimb_author\r\n" + 
+					"inner join ers_reimbursement_status s\r\n" + 
+					"on r.reimb_status_id = s.reimb_status_id\r\n" + 
+					"inner join ers_reimbursement_type ty\r\n" + 
+					"on r.reimb_type_id = ty.reimb_type_id\r\n" + 
+					"WHERE r.reimb_author = " + author); // SQL
 																														// statement
 
-			ps.setInt(1, author);
+			//ps.setInt(1, author);
 			log.debug("finding reimb with the author_id " + author);
 
 			ResultSet rs = ps.executeQuery();

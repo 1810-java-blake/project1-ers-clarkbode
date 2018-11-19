@@ -14,6 +14,10 @@ public class Reimbursement {
 	private int reimb_resolver;
 	private int reimb_status_id;
 	private int reimb_type_id;
+	private String reimb_status;
+	private String reimb_type;
+	private String user_first_name;
+	private String user_last_name;
 	
 	
 	
@@ -26,7 +30,7 @@ public class Reimbursement {
 
 	public Reimbursement(int reimb_id, double reimb_amount, Timestamp reimb_submitted, Timestamp reimb_resolved,
 			String reimb_description, String reimb_receipt, int reimb_author, int reimb_resolver, int reimb_status_id,
-			int reimb_type_id) {
+			int reimb_type_id, String reimb_status, String reimb_type, String user_first_name, String user_last_name) {
 		super();
 		this.reimb_id = reimb_id;
 		this.reimb_amount = reimb_amount;
@@ -38,8 +42,27 @@ public class Reimbursement {
 		this.reimb_resolver = reimb_resolver;
 		this.reimb_status_id = reimb_status_id;
 		this.reimb_type_id = reimb_type_id;
+		this.reimb_status = reimb_status;
+		this.reimb_type = reimb_type;
+		this.user_first_name = user_first_name;
+		this.user_last_name = user_last_name;
 	}
 	
+	public String getReimb_type() {
+		return reimb_type;
+	}
+	
+	public void setReimb_type(String reimb_type) {
+		this.reimb_type = reimb_type;
+	}
+	
+	public String getReimb_status() {
+		return reimb_status;
+	}
+	
+	public void setReimb_status(String reimb_status) {
+		this.reimb_status = reimb_status;
+	}
 	
 	public int getReimb_id() {
 		return reimb_id;
@@ -100,6 +123,26 @@ public class Reimbursement {
 	}
 	public void setReimb_type_id(int reimb_type_id) {
 		this.reimb_type_id = reimb_type_id;
+	}
+
+
+	public String getUser_first_name() {
+		return user_first_name;
+	}
+
+
+	public void setUser_first_name(String user_first_name) {
+		this.user_first_name = user_first_name;
+	}
+
+
+	public String getUser_last_name() {
+		return user_last_name;
+	}
+
+
+	public void setUser_last_name(String user_last_name) {
+		this.user_last_name = user_last_name;
 	}
 	
 	

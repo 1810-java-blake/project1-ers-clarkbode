@@ -67,13 +67,12 @@ export class resolveReimbursementComponent extends React.Component {
     return (
       <div id="statusFormDiv">
         <form>
-          Reimbursement ID: <br></br>
-          <input id="idInput" type="int" onChange={this.update}></input>{/*<button type="button" onClick={this.update}>Search By ID</button>*/} <br></br>
-          {/* Reimbursement Description: <br></br>
-          <input id="descInput" type="text" onChange={this.update}></input> <br></br>
-          Reimbursement Receipt: <br></br>
-          <input id="receiptInput" type="text" onChange={this.update}></input> <br></br> */}
-          New Reimbursement Status: <br></br>
+          
+          <h4>Resolve a Reimbursement</h4>
+          <div class="col">
+          <label>Reimbursement ID:</label> <br></br>
+          <input id="idInput" type="int" onChange={this.update}></input> <br></br>
+          <label>New Reimbursement Status:</label> 
           <select className="form-control" id="statusInput" onChange={this.update}>
             <option value="1">Resolved</option>
             <option value="2">Denied</option>
@@ -81,7 +80,9 @@ export class resolveReimbursementComponent extends React.Component {
           </select>
 
           <button className="btn btn-primary" onClick={this.submit}>Submit</button>
+          </div>
         </form>
+        
 
         <ReimbursementTableComponent />
       </div>
