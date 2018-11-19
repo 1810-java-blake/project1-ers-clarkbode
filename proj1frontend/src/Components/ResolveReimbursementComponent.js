@@ -70,6 +70,8 @@ export class resolveReimbursementComponent extends React.Component {
           
           <h4>Resolve a Reimbursement</h4>
           <div class="col">
+          <label>Resolver ID:</label> <br></br>
+          <input id="resolverInput" type="int" onChange={this.update}></input> <br></br>
           <label>Reimbursement ID:</label> <br></br>
           <input id="idInput" type="int" onChange={this.update}></input> <br></br>
           <label>New Reimbursement Status:</label> 
